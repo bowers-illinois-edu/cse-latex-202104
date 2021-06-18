@@ -97,40 +97,41 @@ Flat is better than nested.
 
 
 ```
-paper_topic_name                        |  string used for repo, tex, and bib files
-+   requirements.txt                    | document number of pages, does that include refs, etc
+paper_topic_name                       | string used for repo, tex, and bib files
++   requirements.txt                   | document number of pages overall, w/out refs, etc
 +-- 1_submitted_paper
 |   +-- paper_topic_name.tex
 |   +-- refs_topic_name.bib
-|   +-- journal_class.cls               | any files needed for the journal latex style
+|   +-- journal_class.cls              | any files needed for the journal latex style
 |   +-- figures
-|   |   +-- temp_vs_time.pdf            | descriptive names for figures (not fig1.pdf, etc)
+|   |   +-- temp_vs_time.pdf           | descriptive names for figures (not fig1.pdf, etc)
 |   |   +-- error_vs_stepsize.pdf
 |   |   `-- ...
-|   +-- data                            | data files that generate the figures
-|   |   +-- Makefile                    | Makefile that will re-generate all figures
-|   |   +-- temp_vs_time.csv            | use the same name as the resulting figure
-|   |   +-- plot_temp_vs_time.py        | plotting scripts, use names like plot_.py
+|   +-- data                           | data files that generate the figures
+|   |   +-- Makefile                   | Makefile that will re-generate all figures
+|   |   +-- temp_vs_time.csv           | use the same name as the resulting figure
+|   |   +-- plot_temp_vs_time.py       | plotting scripts, use names like plot_.py
 |   |   `-- ...
-|   `-- submitted_paper_topic_name.pdf  | actual PDF file submitted
+|   `-- submitted_paper_topic_name.pdf | actual PDF file submitted
 +-- 2_reviews
-|   +-- review_1.pdf                    | individual reviews
+|   +-- review_1.pdf                   | individual reviews
 |   +-- review_2.pdf
-|   `-- editor_statement.pdf            | instructions and summary from editor
+|   `-- editor_statement.pdf           | instructions and summary from editor
 +-- 3_response_to_reviews
 |   +-- response_topic_name.tex
-|   `-- sent_response_topic_name.pdf    | actual PDF file sent to editor
+|   `-- sent_response_topic_name.pdf   | actual PDF file sent to editor
 `-- 4_revised_paper
     +-- paper_topic_name_revised.tex
     +-- refs_topic_name_revised.bib
-    +-- journal_class.cls               | copy here any other files needed
-    +-- figures                         | copy here all the figures again
-    |   +-- temp_vs_time.pdf            | edit figures as needed
+    +-- journal_class.cls              | copy here any other files needed
+    +-- figures                        | copy here all the figures again
+    |   +-- temp_vs_time.pdf           | edit figures as needed
     |   +-- error_vs_stepsize.pdf
     |   `-- ...
-    +-- data                            | copy all data again and edit as needed
+    +-- data                           | copy all data again and edit as needed
     |   `-- ...
-    `-- submitted_paper_topic_name_revised.pdf  | actual PDF submitted
+    `-- submitted_paper_topic_name_revised.pdf | actual PDF submitted
+
 Reference: Matt West @ https://lagrange.mechse.illinois.edu/latex_quick_ref/
 ```
 
@@ -330,7 +331,9 @@ enumitem: full control of itemize environments
 
 # Collaborate Asynchronously using Github
 
-See.... 
+See
+
+On commit messages
 
 # Collaborate Synchronously using...
 
