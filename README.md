@@ -2,8 +2,14 @@
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/lukeolson/cse-latex-202104/HEAD?urlpath=lab)
 
-To build the html file for the EGAP Guide
+To build the html file for the EGAP Guide with less typing use R to convert the markdown to html so that the styles look like the other styles of the [EGAP Methods Guides](https://egap.org/methods-guides/) (see also <https://github.com/egap/methods-guides>).
+
+```r
+Rscript -e "library(rmarkdown); render('latex-guide.md')"
+```
+
+Alternatively, we can get close to that style using the following pandoc command directly.
 
 ```
-pandoc --css latex-guide.css --standalone -N  --from=markdown+yaml_metadata_block -V date="Version of $(date +%Y-%b-%d%n)" latex-guide.md -o latex-guide.html
+pandoc latex-guide.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output latex-guide.html  --self-contained --variable bs3=TRUE --standalone --section-divs --template latex-guide-template.html --include-in-header latex-guide-header.html --no-highlight --variable highlightjs=1 --variable theme=bootstrap --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 ```
