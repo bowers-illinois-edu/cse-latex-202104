@@ -5,5 +5,5 @@
 To build the html file for the EGAP Guide
 
 ```
-pandoc --standalone -N --from=markdown+yaml_metadata_block -V date="Version of $(date +%Y-%b-%d%n)" latex-guide.md -o latex-guide.html
+pandoc --css latex-guide.css --standalone -N  --from=markdown+yaml_metadata_block -V date="Version of $(date +%Y-%b-%d%n)" latex-guide.md -o latex-guide.html
 ```

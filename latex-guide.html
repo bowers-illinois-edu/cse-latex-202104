@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Luke Olson and Jake Bowers" />
+  <title>10 Things For a Better Scientific Paper from LaTeX to the Command Line</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="latex-guide.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">10 Things For a Better Scientific Paper from LaTeX to the Command Line</h1>
+<p class="author">Luke Olson and Jake Bowers</p>
+<p class="date">Version of 2021-Jun-21</p>
+</header>
+<p>This guide shows you how to write a scientific article using the LaTeX document preparation and markup system. We emphasize typing commands at the unix command line in this guide as a way for you to see what is happening under the hood of the LaTeX engine. We provide some links to graphical interfaces to LaTeX at the end of the document.</p>
+<p>To help people <strong>practice</strong> these commands we have a <a href="">Jupyter Lab</a> instance available within which you can start a Terminal session so that you can type the commands required to build a publication quality pdf from a LaTeX file. You can start this environment <a href="link">here</a>.</p>
+<h1 data-number="1" id="the-structure-of-a-document"><span class="header-section-number">1</span> The structure of a document</h1>
+<p>A LaTeX document (or a .tex file) is a <a href="">plain text</a> document that contains commands to the LaTeX processing programs that instruct it how to create a beautiful pdf. The following figure explains at a high level what the parts of the document do.</p>
+<figure>
+<img src="document_structure.png" alt="The Structure of a LaTeX document" /><figcaption aria-hidden="true">The Structure of a LaTeX document</figcaption>
+</figure>
+<h2 data-number="1.1" id="practice"><span class="header-section-number">1.1</span> Practice:</h2>
+<p>Look at the directory <code>1_structure</code> in the <a href="http://">associated github repository</a> (You can practice typing these commands in the command line by clicking on the <code>launch binder</code> button on that repository, and then clicking on the <code>Terminal</code> icon in the Jupyter Lab SOMETHING pane.)</p>
+<h1 data-number="2" id="flavors-and-programs-tex-latex-pdflatex-etc-basic-gist"><span class="header-section-number">2</span> Flavors and Programs: tex, latex, pdflatex, etc … basic gist</h1>
+<p>A “LaTeX document” is short hand for a plain text document written with markup like <code>\textbf{this is bold}</code> for bold text or <code>$ \frac{x^2}{\log(x)}$</code> for math. Once you have a plain text document with markup, you then process it using a set of programs.</p>
+<p>In general, the first and most basic program that parses such markup is called <code>tex' but, in current daily use, you will mostly find yourself using</code>pdflatex<code>or</code>xelatex<code>or maybe</code>lualatex`.</p>
+<p>When Donald Knuth created this approach to making beautiful scientific documents, he started with the <code>tex</code> program but Leslie Lamport build <code>latex</code> by combining multiple <code>tex</code> commands into fewer and simpler macros. Both originally created documents in <code>dvi</code> or <code>postscript</code> format. Nowaways, <code>pdf</code> files are the best way to convey a document from one person to another such that the visual formatting stays the same.</p>
+<p>Here is a list of the common programs that one might use to create a pdf file from a latex document:</p>
+<ul>
+<li>tex: a program that typesets TeX directives or macros</li>
+<li>pdftex: a program that generates a PDF (instead of DVI)</li>
+<li>latex: a program that typesets a pile of LaTeX macros to make things easier</li>
+<li>bibtex: a program to take bibliographic information from a <code>.aux</code> file (created by a run of <code>latex</code> or <code>pdflatex</code> etc) and to generate a bibliography.</li>
+<li>biber: a program like bibtex but with more bibtex database management capabilities.</li>
+<li>pdflatex: a program that generates a PDF</li>
+<li>xelatex: support for a wide variety of fonts and characters</li>
+<li>lualatex: extends latex more of a programming language (via Lua)</li>
+</ul>
+<p>Two take-aways: - always use LaTeX: very rarely (if ever) should you need to dip into plain TeX - always use PDF output (pdflatex) and PDF figures (or PNG … more on this later)</p>
+<p>Notice also:</p>
+<ul>
+<li><code>pdflatex</code> (or <code>xelatex</code> or <code>lualatex</code>) takes several passes</li>
+<li>Tools like <code>latexmk</code> or <code>latexrun</code> automate this</li>
+</ul>
+<p>The following figure shows how it may require three runs of <code>pdflatex</code> (plus a run of <code>bibtex</code>) to go from an <code>example.tex</code> file to an <code>example.pdf</code> file:</p>
+<figure>
+<img src="from_tex_to_pdf.png" alt="From LaTeX to PDF commands " /><figcaption aria-hidden="true">From LaTeX to PDF commands </figcaption>
+</figure>
+<p>You can replace those multiple lines with a single call to <code>latexmk example.tex</code>.</p>
+<h2 data-number="2.1" id="practice-1"><span class="header-section-number">2.1</span> Practice</h2>
+<p>See the directory <code>2_texflavors</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="3" id="latex-workflows"><span class="header-section-number">3</span> 3. LaTeX workflows</h1>
+<ul>
+<li>Directory structure: <a href="https://www.python.org/dev/peps/pep-0020/#id2">Zen of Python</a></li>
+</ul>
+<blockquote>
+<p>Simple is better than complex.<br />
+Complex is better than complicated.<br />
+Flat is better than nested.</p>
+</blockquote>
+<ul>
+<li><p>Commit to something</p></li>
+<li><p>Separate:</p>
+<ul>
+<li>Data collection or raw data (e.g. ## data1.db, … ## datan.db)</li>
+<li>Parsed or processed data (e.g. data_merged_filtered.db)</li>
+<li>Plotting data (e.g. temp_vs_time.csv)</li>
+<li>Plotting script (e.g. temp_vs_time.py)</li>
+<li>One Figure &lt;—&gt; One Script
+<ul>
+<li>temp_vs_time.pdf &lt;—&gt; temp_vs_time.py</li>
+</ul></li>
+</ul></li>
+<li><p>LaTeX labelling: <code>\label{fig:temp_vs_time}</code></p></li>
+</ul>
+<pre><code>paper_topic_name                       | string used for repo, tex, and bib files
++   requirements.txt                   | number of pages,  etc
++-- 1_submitted_paper
+|   +-- paper_topic_name.tex
+|   +-- refs_topic_name.bib
+|   +-- journal_class.cls              | any files needed for the journal latex style
+|   +-- figures
+|   |   +-- temp_vs_time.pdf           | descriptive names for figures (not fig1.pdf, etc)
+|   |   +-- error_vs_stepsize.pdf
+|   |   `-- ...
+|   +-- data                           | data files that generate the figures
+|   |   +-- Makefile                   | Makefile that will re-generate all figures
+|   |   +-- temp_vs_time.csv           | use the same name as the resulting figure
+|   |   +-- plot_temp_vs_time.py       | plotting scripts, use names like plot_.py
+|   |   `-- ...
+|   `-- submitted_paper_topic_name.pdf | actual PDF file submitted
++-- 2_reviews
+|   +-- review_1.pdf                   | individual reviews
+|   +-- review_2.pdf
+|   `-- editor_statement.pdf           | instructions and summary from editor
++-- 3_response_to_reviews
+|   +-- response_topic_name.tex
+|   `-- sent_response_topic_name.pdf   | actual PDF file sent to editor
+`-- 4_revised_paper
+    +-- paper_topic_name_revised.tex
+    +-- refs_topic_name_revised.bib
+    +-- journal_class.cls              | copy here any other files needed
+    +-- figures                        | copy here all the figures again
+    |   +-- temp_vs_time.pdf           | edit figures as needed
+    |   +-- error_vs_stepsize.pdf
+    |   `-- ...
+    +-- data                           | copy all data again and edit as needed
+    |   `-- ...
+    `-- submitted_paper_topic_name_revised.pdf | actual PDF submitted
+
+Reference: Matt West @ https://lagrange.mechse.illinois.edu/latex_quick_ref/</code></pre>
+<h2 data-number="3.1" id="practice-2"><span class="header-section-number">3.1</span> Practice</h2>
+<p>See the directory <code>3_workflows</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="4" id="git-version-control-use-it"><span class="header-section-number">4</span> git version control: Use it!</h1>
+<p>What to track: - Your .tex file :) - The .bib file - Figures -&gt; ./figures/<em>.pdf - Scripts for the figures -&gt; ./data/</em>.py , ./data/<em>.R - Data for the figures -&gt; ./data/</em>.csv</p>
+<p>What not to track: - The pdf of the paper -&gt; paper_randnoise.pdf - Any typesetting output -&gt; <em>.log, </em>.bbl, *.aux, etc</p>
+<p>Tips: - Agree with your co-authors on one of - one sentence per line - hard wrapping at say 80 characters - nothing, free for all</p>
+<p>Commit <em>often</em></p>
+<p>For large edits, take sections at a time, to reduce merge conflicts</p>
+<h2 data-number="4.1" id="practice-3"><span class="header-section-number">4.1</span> Practice</h2>
+<p>See the directory <code>4_git</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="5" id="journal-style"><span class="header-section-number">5</span> 5. Journal Style</h1>
+<p>The journal will have a style file</p>
+<p>Example: <a href="https://www.siam.org/publications/journals/about-siam-journals/information-for-authors#dnn_ctr2112_ContentPane" class="uri">https://www.siam.org/publications/journals/about-siam-journals/information-for-authors#dnn_ctr2112_ContentPane</a></p>
+<ul>
+<li>The journal will also have a style <em>guide</em></li>
+</ul>
+<p>Example: <a href="https://www.siam.org/Portals/0/Publications/Journals/stylemanual/SIAM_STYLE_GUIDE_2019.pdf" class="uri">https://www.siam.org/Portals/0/Publications/Journals/stylemanual/SIAM_STYLE_GUIDE_2019.pdf</a></p>
+<p>Following both of these will speed up the review and copy editing.</p>
+<h2 data-number="5.1" id="practice-4"><span class="header-section-number">5.1</span> Practice</h2>
+<p>See the directory <code>5_style</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="6" id="on-writing-an-interlude"><span class="header-section-number">6</span> On Writing: An interlude…</h1>
+<ul>
+<li><p>Use linters (what?)</p></li>
+<li><p>Mark open items and second pass items with <code>%TODO</code>. You can find all places where you have <code>%TODO</code> in your document using:</p></li>
+</ul>
+<pre><code>grep TODO paper_randnoise.tex</code></pre>
+<ul>
+<li><p>Clear contributions, Outline, Write/Revise</p></li>
+<li><p>Polish and make it look visually appealing to read</p></li>
+</ul>
+<p>Remember: Peer reviewed publications are critically important to science — treat your writing and presentation of results with care</p>
+<p>Remember: Peer reviewed publications take reviewer/editor time — treat your writing and presentation of results with care</p>
+<p>Remember: (Hopefully) Many people will read your publication — treat your publication with care</p>
+<h2 data-number="6.1" id="practice-5"><span class="header-section-number">6.1</span> Practice</h2>
+<p>See the directory <code>6_linting</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="7" id="latex-dos-and-donts-fact-not-opinion"><span class="header-section-number">7</span> LaTeX dos and don’ts: Fact, not opinion! :)</h1>
+<ul>
+<li>DO keep your LaTeX readable!
+<ul>
+<li>Block indent equations</li>
+<li>Align tabular data</li>
+<li>Limited whitespace</li>
+</ul></li>
+<li>DON’T overuse macros
+<ul>
+<li>Intended for complex arrangements with repeated use</li>
+<li>Things that might change.</li>
+</ul></li>
+<li>DO attach a float environment after the paragraph of first reference
+<ul>
+<li>Generally use <code>\begin{figure}[!ht]</code> or <code>\begin{table}[!ht]</code></li>
+<li><code>!</code> tex will ignore area restrictions</li>
+<li><code>h</code> place it “here” if it fits in the area</li>
+<li><code>t</code> place it at the “top” otherwise and if it fits otherwise create a new page</li>
+</ul></li>
+<li>DON’T use and other tricks to for spacing
+<ul>
+<li>, , </li>
+</ul></li>
+<li>DO use packages for consistent layouts
+<ul>
+<li>booktabs: clean tabular</li>
+<li>siunitx: large numbers and notation</li>
+</ul></li>
+<li>DON’T use align for everything
+<ul>
+<li>equation: base</li>
+<li>align: multiple equations</li>
+<li>split: one equation split with alignment</li>
+<li>multline: one equation split with no alignment</li>
+</ul></li>
+<li>DO use consistent fonts throughout (more on this…)
+<ul>
+<li>Label figures with </li>
+<li>Label equations with </li>
+<li>Label sections with </li>
+<li>Label tables with </li>
+</ul></li>
+</ul>
+<h2 data-number="7.1" id="practice-6"><span class="header-section-number">7.1</span> Practice</h2>
+<p>See the directory <code>7_dos</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="8" id="on-bibtex"><span class="header-section-number">8</span> 8. On bibtex</h1>
+<ul>
+<li>Bibtex: a program and a format for specifying bibliography entries</li>
+<li>Journals specify the formatting rules</li>
+<li>Several types
+<ul>
+<li>By id: [7]</li>
+<li>By name [Olson 2021] or [Ol21]</li>
+<li>Can be unsorted or listed by order of reference in the paper</li>
+</ul></li>
+</ul>
+<p>The journal <code>.bst</code> defines the required fields</p>
+<p>General workflow: - Grab full citation online at citation’s journal - Clean up entry (removing abstracts or other fields) - Format cleanly. Use <code>{ }</code> vs <code>“ “</code> - <code>{ }</code> also force capitalization: - <code>title = {All about {Krylov} methods}</code></p>
+<figure>
+<img src="bib_structure.png" alt="The Structure of a LaTeX document with BIB" /><figcaption aria-hidden="true">The Structure of a LaTeX document with BIB</figcaption>
+</figure>
+<h2 data-number="8.1" id="practice-7"><span class="header-section-number">8.1</span> Practice</h2>
+<p>See the directory <code>8_citations</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="9" id="on-figures"><span class="header-section-number">9</span> On Figures</h1>
+<p>Fonts in figures should match the fonts in the float/article.</p>
+<p><code>\includegraphics[width=0.3textwidth]{./figures/myfig.pdf}</code> also scales the fonts – be careful to ensure your figure text is easy to read.</p>
+<p>Use consistent color schemes throughout the paper</p>
+<p>Label everything</p>
+<p>Do not introduce new notation in a figure or its caption</p>
+<p>The figure caption should describe, not discuss.</p>
+<figure>
+<img src="bad_figure.png" alt="A terrible figure" /><figcaption aria-hidden="true">A terrible figure</figcaption>
+</figure>
+<h2 data-number="9.1" id="practice-8"><span class="header-section-number">9.1</span> Practice</h2>
+<p>See the directory <code>9_figures</code> and the <code>readme.md</code> file therein.</p>
+<h1 data-number="10" id="helpful-tools"><span class="header-section-number">10</span> Helpful tools</h1>
+<p>tikz: sharp figures and schematics in LaTeX</p>
+<p>tikzpdf: build/rebuild tikzpictures</p>
+<ul>
+<li><a href="https://github.com/lukeolson/tikzpdf" class="uri">https://github.com/lukeolson/tikzpdf</a></li>
+</ul>
+<p>latexrun: compile and summarize warnings</p>
+<p>chktex: a LaTeX linter</p>
+<p>betterbib: automatically format/update your bib entries</p>
+<ul>
+<li><a href="https://github.com/nschloe/betterbib" class="uri">https://github.com/nschloe/betterbib</a></li>
+</ul>
+<p>illinois-letterhead: a letterhead in LaTeX</p>
+<ul>
+<li><a href="https://github.com/lukeolson/illinois-letterhead" class="uri">https://github.com/lukeolson/illinois-letterhead</a></li>
+</ul>
+<p>scrub your LaTeX and submit to Arxiv:</p>
+<ul>
+<li><a href="https://github.com/lukeolson/clean-latex-to-arxiv.git" class="uri">https://github.com/lukeolson/clean-latex-to-arxiv.git</a></li>
+</ul>
+<p>booktabs: nice looking tables</p>
+<p>siunitx: nice looking numbers and units</p>
+<p>algorithm2e: algorithm environment</p>
+<p>cleveref: <code>\cref{}</code> referencing for all</p>
+<p>hyperref: hyper linkes to figures, etc</p>
+<p>backref: add page numbers to the bib</p>
+<p>microtype: <a href="http://www.khirevich.com/latex/microtype/"><u>http://www.khirevich.com/latex/microtype/</u></a></p>
+<p>enumitem: full control of itemize environments</p>
+<h1 data-number="11" id="collaborate-asynchronously-using-github"><span class="header-section-number">11</span> Collaborate Asynchronously using Github</h1>
+<p>See</p>
+<p>On commit messages</p>
+<h1 data-number="12" id="collaborate-synchronously-using"><span class="header-section-number">12</span> Collaborate Synchronously using…</h1>
+<p>There are several tools that allow collaborators to edit plain text documents at the same time.</p>
+<p>Some like <a href="">Overleaf</a> because it compiles LaTeX.</p>
+<p>Others like <a href="https://teletype.atom.io">Teletype for Atom</a>.</p>
+<p>Or <a href="">Hedgedoc</a></p>
+<p>Or <a href="">Hack MD</a></p>
+<p>Or <a href="">TeXPad Connect</a></p>
+<h1 data-number="13" id="extra"><span class="header-section-number">13</span> Extra:</h1>
+<p>Before you commit and send it to collaborators you need to do a clean recompile at the command line.</p>
+<h2 data-number="13.1" id="ways-to-type-a-document-using-latex-markup"><span class="header-section-number">13.1</span> Ways to type a document using LaTeX markup</h2>
+<p>A LaTeX document is a plain text file. This means that you can use any text editor to write a LaTeX document. However, a text editor that (1) recognizes that <code>\textbf{}</code> is a LaTeX command or that (2) keeps track of matching braces and parentheses makes it easier to write LaTeX markup. To that end, we use <a href="">neovim</a> with <a href="">vimtex</a> plugins but we know that there are many other approaches to typing a plain text document using LaTeX markup.</p>
+<p>Our friends who use LaTeX like the following systems. Each person prefers to interact with their computer differently, so we merely list what we’ve heard about here.</p>
+<ul>
+<li><a href="https://kevinlanguasco.wordpress.com/2019/04/29/latex-editing-with-emacs-on-manjaro/">Emacs with Auctex</a></li>
+<li>[Neovim or Vim with vimtex or texlab]</li>
+<li><a href="">TexPad</a> (we think this hides too many errors and warnings, so we think this is most useful so that you can go back to the command line)</li>
+<li><a href="">TexShop</a> (we think this hides too many errors and warnings, so we think this is most useful so that you can go back to the command line)</li>
+<li>[TeXstudio]</li>
+<li>[Atom]</li>
+<li>[Sublime 3]</li>
+</ul>
+<h2 data-number="13.2" id="information-about-this-document"><span class="header-section-number">13.2</span> Information about this document</h2>
+<p>We wrote this document using <a href="">pandoc flavored markdown</a> and turned it from plain text into HTML via the following command at the unix command line on our OS X laptops:</p>
+<pre><code>pandoc --standalone --from=markdown+yaml_metadata_block -V date=&quot;Version of $(date +%Y-%b-%d%n)&quot; latex-guide.md -o latex-guide.html
+</code></pre>
+<h1 data-number="14" id="references"><span class="header-section-number">14</span> References</h1>
+</body>
+</html>

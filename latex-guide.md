@@ -98,7 +98,7 @@ Flat is better than nested.
 
 ```
 paper_topic_name                       | string used for repo, tex, and bib files
-+   requirements.txt                   | document number of pages overall, w/out refs, etc
++   requirements.txt                   | number of pages,  etc
 +-- 1_submitted_paper
 |   +-- paper_topic_name.tex
 |   +-- refs_topic_name.bib
@@ -372,7 +372,7 @@ Our friends who use LaTeX like the following systems. Each person prefers to int
 We wrote this document using [pandoc flavored markdown]() and turned it from plain text into HTML via the following command at the unix command line on our OS X laptops:
 
 ```
-pandoc --standalone --from=markdown+yaml_metadata_block -V date="Version of $(date +%Y-%b-%d%n)" latex-guide.md -o latex-guide.html
+pandoc --css latex-guide.css --standalone -N  --from=markdown+yaml_metadata_block -V date="Version of $(date +%Y-%b-%d%n)" latex-guide.md -o latex-guide.html
 
 ```
 
